@@ -1,0 +1,79 @@
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+
+		
+		
+		$(document).on('click', '.pokeimg', function(){
+				var pokenum = $(this).attr('id');
+				
+
+           $.get("http://pokeapi.co/api/v1/pokemon/" + pokenum + "/", function(res){
+
+           	name = res.name;
+           	attack = res.attack;
+           	defense = res.defense;
+           	evolution = name +" will be able to evolve into " + res.evolutions[0].to + " at level " + res.evolutions[0].level;
+
+           	types = "";
+           	for (var i = 0; i < res.types.length; i++){
+           		types += res.types[i].name
+           		if (i < res.types.length - 1){
+           			types += ", "
+           		} 
+           	}
+
+           	sprite = "http://pokeapi.co/media/img/" + pokenum + ".png"
+           	console.log(sprite)
+
+           	$('.sprite').html("<img class='sprite' src='" + sprite + "'>");
+           	$('.name').html("<p class='name'>Name: " +name+ "</p>");
+           	$('.attack').html("<p class='attack'>Attack: " + attack + "</p>");
+           	$('.defense').html("<p class='defense'>Defense: " + defense + "</p>");
+           	$('.types').html("<p class='types'>" + types + "</p>");
+           	$('.evoltuion').html("<p class='evolution'>" + evolution + "</p>");
+
+
+           }, 'json');
+
+      	});		
+		for (var i = 1; i <= 151; i++){
+			$('.image').append("<img src='http://pokeapi.co/media/img/" + i + ".png' id='" + i + "' class='pokeimg'>");
+		}
+
+	});
+	</script>
+	<style>
+		.info{
+			width: 200px;
+			height: auto;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.main {
+			width: 500px;
+			height: auto;
+			display: inline-block;
+		}
+	</style>	
+</head>
+<body>
+	<div class='main'>
+		<div class='image'></div>
+
+
+	</div>
+	<div class='info'>
+		<span class='sprite'></span>
+		<p class='name'></p>
+		<p class='attack'></p>
+		<p class='defense'></p>
+		<p class='types'></p>
+		<p class='evolution'></p>
+
+	</div>
+</body>
+</html>
